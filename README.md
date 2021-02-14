@@ -14,10 +14,9 @@ Eventually I plan to build this out into its own program to manage and create sm
 
 # Configuration
 You need to add lastupdate to your plugins list in beets' config.yaml and then also the following to specify your username and API key
-`
-lastupdate:
-    user: YOURLASTFMUSERNAME
-    apikey: YOURLASTFMAPIKEY`
+`lastupdate:`
+`    user: YOURLASTFMUSERNAME`
+`    apikey: YOURLASTFMAPIKEY`
 
 # Usage
 
