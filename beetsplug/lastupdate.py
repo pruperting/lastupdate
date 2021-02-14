@@ -25,12 +25,12 @@ def print_track(track):
 TRACK_SEPARATOR = " - "
 
 
-def split_artist_track(artist_track):
-    artist_track = artist_track.replace(" – ", " - ")
-    artist_track = artist_track.replace("“", '"')
-    artist_track = artist_track.replace("”", '"')
+def split_artist_track(artisttitle):
+    artisttitle = artisttitle.replace(" – ", " - ")
+    artisttitle = artisttitle.replace("“", '"')
+    artisttitle = artisttitle.replace("”", '"')
 
-    (artist, track) = artist_track.split(TRACK_SEPARATOR)
+    (artist, track) = artisttitle.split(TRACK_SEPARATOR)
     artist = artist.strip()
     track = track.strip()
     print("Artist:\t\t'" + artist + "'")
@@ -53,8 +53,10 @@ def get_recent_tracks(username, number):
     )
     recent_tracks = lastfm_network.get_user(username).get_recent_tracks(limit=number)
     for i, track in enumerate(recent_tracks):
-        printable = track_and_timestamp(track)
-        print(str(i + 1) + " " + printable)
+        timestamp = f"{track.timestamp}"
+        artisttitle = f"{track.track}"
+        artist,track = split_artist_track(artisttitle)
+        print(str(i + 1) + " " + "timestamp is " + timestamp + " " + "artist is " + artist + " " + "title is " + track)
     return recent_tracks
 
 def lastfm_update():
