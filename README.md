@@ -26,5 +26,6 @@ I wrote this primarily to make the smartplaylist plugin more useful, but I suspe
 
 # Current Status
 2021-02-14 Born on valentines day, love at first site. Currently, all this plugin does is get your last 200 played tracks and splits out the timestamp, artist and title into rows - but thats a start!
+
 2021-02-14 Well, its later on and after some Valentines day chocolate, I've actually got a working plugin. Its ugly as sin as the commit says, but it works with new plays and then doesn't overright when run again. It's really kinda neat.
 
