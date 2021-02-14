@@ -16,11 +16,11 @@ class SuperPlug(BeetsPlugin):
     def commands(self):
         return [lastupdate_command]
 
-def track_and_timestamp(track):
-    return f"{track.timestamp}\t{track.track}"
+#def track_and_timestamp(track):
+#    return f"{track.timestamp}\t{track.track}"
 
-def print_track(track):
-    print(track_and_timestamp(track))
+#def print_track(track):
+#    print(track_and_timestamp(track))
 
 TRACK_SEPARATOR = " - "
 
@@ -33,8 +33,8 @@ def split_artist_track(artisttitle):
     (artist, track) = artisttitle.split(TRACK_SEPARATOR)
     artist = artist.strip()
     track = track.strip()
-    print("Artist:\t\t'" + artist + "'")
-    print("Track:\t\t'" + track + "'")
+    #print("Artist:\t\t'" + artist + "'")
+    #print("Track:\t\t'" + track + "'")
 
     # Validate
     if len(artist) == 0 and len(track) == 0:
