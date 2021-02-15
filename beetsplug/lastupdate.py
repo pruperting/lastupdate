@@ -89,12 +89,12 @@ def process_tracks(lib, timestamp, artist, title):
             total_notupdated += 1
     return total_updated, total_found, total_notupdated
 
-def get_recent_tracks(lib, username, number):
+def get_recent_tracks(lib, username, rnumber):
     lastfm_apikey = config['lastupdate']['apikey'].as_str()
     lastfm_network = pylast.LastFMNetwork(
     api_key=lastfm_apikey,
     )
-    recent_tracks = lastfm_network.get_user(username).get_recent_tracks(limit=number)
+    recent_tracks = lastfm_network.get_user(username).get_recent_tracks(limit=rnumber)
     for i, track in enumerate(recent_tracks):
         timestamp = f"{track.timestamp}"
         artisttitle = f"{track.track}"
@@ -103,12 +103,26 @@ def get_recent_tracks(lib, username, number):
     print("total found " + str(total_found) + " total updated " + str(total_updated) + " total not updated " + str(total_notupdated))
     return recent_tracks
 
+
+def get_loved_tracks(lib, username, lnumber):
+    lastfm_apikey = config['lastupdate']['apikey'].as_str()
+    lastfm_network = pylast.LastFMNetwork(
+    api_key=lastfm_apikey,
+    )
+    loved_tracks = lastfm_network.get_user(username).get_loved_tracks(limit=lnumber)
+    for i, track in enumerate(loved_tracks):
+        artisttitle = f"{track.track}"
+        artist,title = split_artist_track(artisttitle)
+        
+
 def lastfm_update(lib):
     lastfm_username = config['lastupdate']['user'].as_str()
     print(lastfm_username + " last played:")
     try:
-        trackcount = config['lastupdate']['trackcount'].get()
-        get_recent_tracks(lib, lastfm_username, trackcount)
+        rtrackcount = config['lastupdate']['recent_trackcount'].get()
+        #get_recent_tracks(lib, lastfm_username, rtrackcount)
+        ltrackcount = config['lastupdate']['loved_trackcount'].get()
+        get_loved_tracks(lib, lastfm_username, ltrackcount)
     except pylast.WSError as e:
         print("Error: " + str(e))
 
