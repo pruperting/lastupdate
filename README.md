@@ -24,6 +24,8 @@ The idea is you run this regularly (nightly) to keep your beets database in sync
 # To Do
 I wrote this primarily to make the smartplaylist plugin more useful, but I suspect it wont work very well with the last_played field as it has no way of comparing that against the time when the playlists are updated. So I'll likely need to modify that plugin so this new field is useful.
 
+UPDATE, it actually seems to somehow work already, using  `python3 /usr/local/bin/beet list last_played:-2d..` beets successfully pulls back tracks I played yesterday that had their last_played date updated by this plugin. It might be luck, but I assume this can now be used for smartplaylists. Need to test more.
+
 # Current Status
 2021-02-14 Born on valentines day, love at first site. Currently, all this plugin does is get your last 200 played tracks and splits out the timestamp, artist and title into rows - but thats a start!
 
