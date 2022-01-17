@@ -19,7 +19,7 @@ class SuperPlug(BeetsPlugin):
     item_types = {
         'play_count':  types.INTEGER,
         'last_played': library.DateType(),
-        'rating':      types.FLOAT,
+        'rating':      types.INTEGER,
     }
     def commands(self):
         return [lastupdate_command]
@@ -34,22 +34,32 @@ def split_artist_track(artisttitle):
     artisttitle = artisttitle.replace(" – ", " - ")
     artisttitle = artisttitle.replace("“", '"')
     artisttitle = artisttitle.replace("”", '"')
+    try:
+        (artist, title) = artisttitle.split(TRACK_SEPARATOR)
+        artist = artist.strip()
+        title = title.strip()
+        print("split artist:" + str(artist) + " title:" + str(title))
+    except ValueError:
+        print("Value error")
+        print(str(artisttitle))
+    #    (artist, title) = artisttitle.split(TRACK_SEPARATOR)
+        artist = "ERROR"
+        title = "ERROR"
+    #    print("artitst:" + str(artist) + " title:" + str(title))
 
-    (artist, title) = artisttitle.split(TRACK_SEPARATOR)
-    artist = artist.strip()
-    title = title.strip()
     # Validate
-    if len(artist) == 0 and len(title) == 0:
-        sys.exit("Error: Artist and title are blank")
-    if len(artist) == 0:
-        sys.exit("Error: Artist is blank")
-    if len(title) == 0:
-        sys.exit("Error: Title is blank")
+    #if len(artist) == 0 and len(title) == 0:
+    #    sys.exit("Error: Artist and title are blank")
+    #if len(artist) == 0:
+    #    sys.exit("Error: Artist is blank")
+    #if len(title) == 0:
+    #    sys.exit("Error: Title is blank")
     return (artist, title)
 
 
 
 def process_tracks(lib, timestamp, artist, title, process):
+    print("searching for " + str(artist) + " " + str(title) + " " + "timestamp " + timestamp)
     global total_updated
     global total_found
     global total_notupdated
@@ -76,25 +86,36 @@ def process_tracks(lib, timestamp, artist, title, process):
         song = lib.items(query).get()
 
     if song is not None:
+        print("processing")
+        print(song)
         if  process == 1:
             total_found += 1
             count = int(song.get('play_count', 0))
+            print(int(count))
             lastplayed = int(song.get('last_played', 0))
+            print(int(lastplayed))
+            print(int(timestamp))
             if int(timestamp) > lastplayed:
                 count += 1
                 song['play_count'] = count
                 song['last_played'] = timestamp
                 song.store()
                 total_updated += 1
-                print(str(song) + " updated with new last played of " + str(timestamp) + " and playcount of " + str(count))
+                print("updated with new last played")
             else:
                 total_notupdated += 1
+                print(song)
+                print("not updated ")
         if  process == 2:
-            total_found += 1
-            song['rating'] = 1
-            song.store()
-            total_updated += 1
-            print(str(song) + " updated with rating of 1")
+            rating = int(song.get('rating', 0))
+            if rating < 1:
+                total_found += 1
+                song['rating'] = 1
+                song.store()
+                total_updated += 1
+                print(str(song) + " updated with rating of 1")
+            else:
+                total_notupdated += 1
             
     return total_updated, total_found, total_notupdated
 
@@ -141,4 +162,3 @@ def lastfm_update(lib):
         get_loved_tracks(lib, lastfm_username, ltrackcount)
     except pylast.WSError as e:
         print("Error: " + str(e))
-
