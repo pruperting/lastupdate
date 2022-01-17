@@ -31,6 +31,8 @@ UPDATE, it actually seems to somehow work already, using  `python3 /usr/local/bi
 
 2021-02-14 Well, its later on and after some Valentines day chocolate, I've actually got a working plugin. Its ugly as sin as the commit says, but it works with new plays and then doesn't overright when run again. It's really kinda neat.
 
-2021-02-15 First attemp at adding in feature to sync loved tracks with beets, by rating each track as a 1 in beets using ratings tag
+2021-02-15 First attempt at adding in feature to sync loved tracks with beets, by rating each track as a 1 in beets using ratings tag
+
+2022-01-17 Added in extra verboseness to deal with crashes when strange artist / titles are returned by last.fm - allows the plugin to continue even if the artist / tracks can't be split out.
 
 
